@@ -1,6 +1,7 @@
 import os
 import tempfile
 import subprocess
+import imageio_ffmpeg
 import streamlit as st
 from gtts import gTTS
 import whisper
