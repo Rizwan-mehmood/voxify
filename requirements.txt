@@ -1,0 +1,8 @@
+streamlit
+moviepy
+gTTS
+openai-whisper
+torch
+deep_translator
+soundfile
+ffmpeg-python
