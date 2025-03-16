@@ -8,7 +8,9 @@ import whisper
 from deep_translator import GoogleTranslator
 import soundfile as sf  # for writing audio files if needed
 
-os.environ["FFMPEG_BINARY"] = imageio_ffmpeg.get_ffmpeg_exe()
+ffmpeg_bin = imageio_ffmpeg.get_ffmpeg_exe()
+os.environ["PATH"] += os.pathsep + os.path.dirname(ffmpeg_bin)
+os.environ["FFMPEG_BINARY"] = ffmpeg_bin
 # ----------------------------
 # Step 1: Extract Audio from Video using FFmpeg
 # ----------------------------
