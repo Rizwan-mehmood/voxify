@@ -8,21 +8,19 @@ import whisper
 from deep_translator import GoogleTranslator
 import soundfile as sf  # for writing audio files if needed
 
-
+os.environ["FFMPEG_BINARY"] = imageio_ffmpeg.get_ffmpeg_exe()
 # ----------------------------
 # Step 1: Extract Audio from Video using FFmpeg
 # ----------------------------
 def extract_audio(video_path, audio_path):
-    # Get the path to the ffmpeg binary from imageio-ffmpeg
-    ffmpeg_path = imageio_ffmpeg.get_ffmpeg_exe()
     command = [
-        ffmpeg_path,      # Use the binary path from imageio-ffmpeg
-        "-y",             # Overwrite output files without asking
-        "-i", video_path, # Input video file
-        "-vn",            # No video
-        "-acodec", "pcm_s16le",  # Use PCM 16-bit little endian codec
-        "-ar", "16000",   # Set audio sampling rate to 16 kHz
-        "-ac", "1",       # Set number of audio channels to 1
+        os.environ["FFMPEG_BINARY"],
+        "-y",             
+        "-i", video_path, 
+        "-vn",            
+        "-acodec", "pcm_s16le",
+        "-ar", "16000",   
+        "-ac", "1",       
         audio_path
     ]
     subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
