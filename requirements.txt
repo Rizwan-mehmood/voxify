@@ -6,4 +6,3 @@ torch
 deep_translator
 soundfile
 ffmpeg-python
-imageio_ffmpeg

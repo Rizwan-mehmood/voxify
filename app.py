@@ -1,29 +1,32 @@
 import os
 import tempfile
 import subprocess
-import imageio_ffmpeg
 import streamlit as st
 from gtts import gTTS
 import whisper
 from deep_translator import GoogleTranslator
 import soundfile as sf  # for writing audio files if needed
 
-ffmpeg_bin = imageio_ffmpeg.get_ffmpeg_exe()
-os.environ["PATH"] += os.pathsep + os.path.dirname(ffmpeg_bin)
-os.environ["FFMPEG_BINARY"] = ffmpeg_bin
+
 # ----------------------------
 # Step 1: Extract Audio from Video using FFmpeg
 # ----------------------------
 def extract_audio(video_path, audio_path):
+    # This FFmpeg command extracts audio from the video, converts it to WAV
+    # with a sample rate of 16000 Hz and 1 audio channel.
     command = [
-        os.environ["FFMPEG_BINARY"],
-        "-y",             
-        "-i", video_path, 
-        "-vn",            
-        "-acodec", "pcm_s16le",
-        "-ar", "16000",   
-        "-ac", "1",       
-        audio_path
+        "ffmpeg",
+        "-y",  # overwrite output files without asking
+        "-i",
+        video_path,  # input video file
+        "-vn",  # no video
+        "-acodec",
+        "pcm_s16le",  # use PCM 16-bit little endian codec
+        "-ar",
+        "16000",  # set audio sampling rate to 16 kHz
+        "-ac",
+        "1",  # set number of audio channels to 1
+        audio_path,
     ]
     subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
     st.write(f"Audio extracted and saved to {audio_path}")
